@@ -1,6 +1,6 @@
- # CodeBook
+ ## CodeBook
 
-This is a code book that describes the variables, the data, and any transformations performed to clean up the data.
+This is a code book that describes the data, the transformation, and the variables of run_analysis.R.
 
 ## The data source
 
