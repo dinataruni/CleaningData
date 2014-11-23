@@ -33,10 +33,6 @@ sub_merged <- rbind(subject_train, subject_test)
 
 merge_act <- inner_join(activities, y_merged)
 
-# 1. Merges the training and the test sets to create one data set.
-
-merge_all <- cbind(x_merged)
-
 # Read Features 
 
 features <- read.table("features.txt")
@@ -47,13 +43,13 @@ extract_features <- features[grep('mean|std|Mean', features$V2), ]
 
 # Subset merged data to only show measurements on mean and standard deviation
 
-subset_meanstd <- merge_all[ ,c(extract_features$V1)]
+subset_meanstd <- x_merged[ ,c(extract_features$V1)]
 
 # Assign useful colnames
 
 colnames(subset_meanstd) <- extract_features$V2
 
-# Merge Subjet & Activity
+# Merge Subjet & Activity and Merges the training and the test sets to create one data set.
 
 data <- cbind(sub_merged, merge_act, subset_meanstd)
 
