@@ -1,4 +1,5 @@
- ## CodeBook
+
+## CodeBook
 
 This is a code book that describes the data, the transformation, and the variables of run_analysis.R.
 
