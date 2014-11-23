@@ -9,6 +9,8 @@
 library(dplyr)
 library(reshape2)
 
+print("Reading datasets")
+
 # Read Training datasets
 x_train <- read.table("./train/X_train.txt")
 y_train <- read.table("./train/y_train.txt")
@@ -31,6 +33,7 @@ sub_merged <- rbind(subject_train, subject_test)
 
 # 3. Uses descriptive activity names to name the activities in the data set
 
+print("Assigning activity labels")
 merge_act <- inner_join(activities, y_merged)
 
 # Read Features 
@@ -38,11 +41,11 @@ merge_act <- inner_join(activities, y_merged)
 features <- read.table("features.txt")
 
 # 2. Extracts only the measurements on the mean and standard deviation for each measurement.
-
+print("Extracting only variables regarding mean or standard deviation")
 extract_features <- features[grep('mean|std|Mean', features$V2), ]
 
 # Subset merged data to only show measurements on mean and standard deviation
-
+print("Subsetting dataset based on extracted variables")
 subset_meanstd <- x_merged[ ,c(extract_features$V1)]
 
 # Assign useful colnames
@@ -50,7 +53,7 @@ subset_meanstd <- x_merged[ ,c(extract_features$V1)]
 colnames(subset_meanstd) <- extract_features$V2
 
 # Merge Subjet & Activity and Merges the training and the test sets to create one data set.
-
+print("Merging data")
 data <- cbind(sub_merged, merge_act, subset_meanstd)
 
 # Renaming columns 
@@ -61,10 +64,13 @@ names(data)[3] <- "Activity"
 
 # Summarizing by Subject & Activity 
 
+print("Summarizing data")
+
 data.long <- melt(data, id = c("Subject", "Activity"))
 data.wide <- dcast(data.long, Subject + Activity ~ variable, mean)
 
 # 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
+print("Creating tidy data file")
 tidy.data <- data.wide
 write.table(tidy.data, "tidydata.txt", row.names = FALSE, quote = FALSE)
